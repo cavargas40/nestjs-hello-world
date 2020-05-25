@@ -21,4 +21,17 @@ describe('AppController (e2e)', () => {
       .expect(200)
       .expect('Hello World!');
   });
+
+  it('/list-locations (GET)', () => {
+    return request(app.getHttpServer())
+    .get('/list-locations')
+    .expect(200)
+    .expect({
+      locations: [
+        'location 1',
+        'location 2',
+        'location 3'
+      ]
+    })
+  })
 });
