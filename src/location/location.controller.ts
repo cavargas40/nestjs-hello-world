@@ -1,7 +1,7 @@
 import { Controller, Get } from '@nestjs/common';
 import { LocationService } from './location.service';
 import { LocationListDto } from './location-list.dto';
-import { MappingRegistryService } from 'src/common/mapping-registry.service';
+import { MappingRegistryService } from '../common/mapping-registry.service';
 import { LocationDto } from './location.dto';
 import { Location } from './location.entity';
 
