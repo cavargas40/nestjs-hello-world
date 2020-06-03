@@ -1,4 +1,5 @@
 import { Controller, Get } from '@nestjs/common';
+import { LocationService } from './location.service';
 
 interface ILocationListDto {
   locations: Array<string>;
@@ -6,10 +7,10 @@ interface ILocationListDto {
 
 @Controller('location')
 export class LocationController {
+  constructor(private readonly locationService: LocationService) {}
   @Get('list')
   listLocations(): ILocationListDto {
-    return {
-      locations: ['location 1', 'location 2', 'location 3'],
-    };
+    const locations = this.locationService.list();
+    return { locations };
   }
 }

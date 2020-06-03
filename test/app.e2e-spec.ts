@@ -24,14 +24,10 @@ describe('AppController (e2e)', () => {
 
   it('/location/list (GET)', () => {
     return request(app.getHttpServer())
-    .get('/location/list')
-    .expect(200)
-    .expect({
-      locations: [
-        'location 1',
-        'location 2',
-        'location 3'
-      ]
-    })
-  })
+      .get('/location/list')
+      .expect(200)
+      .expect({
+        locations: ['Location 1', 'Location 2', 'Location 3'],
+      });
+  });
 });
