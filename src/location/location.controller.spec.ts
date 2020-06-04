@@ -1,5 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { LocationController } from './location.controller';
+import { LocationService } from './location.service';
 
 describe('Location Controller', () => {
   let controller: LocationController;
@@ -7,6 +8,7 @@ describe('Location Controller', () => {
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       controllers: [LocationController],
+      providers: [LocationService]
     }).compile();
 
     controller = module.get<LocationController>(LocationController);
@@ -19,9 +21,9 @@ describe('Location Controller', () => {
   it('should return locations', () => {
     expect(controller.listLocations()).toMatchObject({
       locations: [
-        'location 1',
-        'location 2',
-        'location 3'
+        'Location 1',
+        'Location 2',
+        'Location 3'
       ]
     })
   })
