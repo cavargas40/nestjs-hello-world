@@ -4,9 +4,10 @@ import { AppService } from './app.service';
 import { LocationModule } from './location/location.module';
 import { ConfigModule } from '@nestjs/config';
 import { DatabaseModule } from './database/database.module';
-import configuration from 'config/configuration';
+import { CommonModule } from './common/common.module';
 import databaseConfig from 'config/database.config';
 import ormConfig from 'config/orm.config';
+import { TypeOrmModule, TypeOrmModuleOptions } from '@nestjs/typeorm';
 
 @Module({
   imports: [
@@ -14,9 +15,10 @@ import ormConfig from 'config/orm.config';
     ConfigModule.forRoot({
       isGlobal: true,
       // The value assigned to the load property is an array, allowing you to load multiple configuration files (e.g. load: [databaseConfig, authConfig])
-      load: [configuration, databaseConfig, ormConfig],
+      load: [databaseConfig, ormConfig],
     }),
     DatabaseModule,
+    CommonModule,
   ],
   controllers: [AppController],
   providers: [AppService],
