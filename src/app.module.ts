@@ -5,9 +5,8 @@ import { LocationModule } from './location/location.module';
 import { ConfigModule } from '@nestjs/config';
 import { DatabaseModule } from './database/database.module';
 import { CommonModule } from './common/common.module';
-import databaseConfig from 'config/database.config';
-import ormConfig from 'config/orm.config';
-import { TypeOrmModule, TypeOrmModuleOptions } from '@nestjs/typeorm';
+import databaseConfig from '../config/database.config';
+import ormConfig from '../config/orm.config';
 
 @Module({
   imports: [

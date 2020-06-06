@@ -1,30 +1,58 @@
-import { Test, TestingModule } from '@nestjs/testing';
 import { LocationController } from './location.controller';
 import { LocationService } from './location.service';
+import { MockHelper } from '../common/mock.helper';
+import { GenericFactory } from '../common/generic.factory';
+import { LocationMappingService } from './location-mapping.service';
+import { MappingRegistryService } from '../common/mapping-registry.service';
+import { Location } from './location.entity';
 
 describe('Location Controller', () => {
-  let controller: LocationController;
+  let locationController: LocationController;
+  let mockLocationService: LocationService;
+  let mappingRegistryService: MappingRegistryService;
 
   beforeEach(async () => {
-    const module: TestingModule = await Test.createTestingModule({
-      controllers: [LocationController],
-      providers: [LocationService]
-    }).compile();
+    mockLocationService = MockHelper.mock<LocationService>({
+      list: {
+        resolves: [
+          GenericFactory.create<Location>(Location, {
+            id: 1,
+            name: 'Location 1',
+          }),
+          GenericFactory.create<Location>(Location, {
+            id: 2,
+            name: 'Location 2',
+          }),
+        ],
+      },
+    });
 
-    controller = module.get<LocationController>(LocationController);
+    mappingRegistryService = new MappingRegistryService();
+    const locationMappingService = new LocationMappingService(
+      mappingRegistryService,
+    );
+    locationController = await new LocationController(
+      mockLocationService,
+      mappingRegistryService,
+    );
   });
 
   it('should be defined', () => {
-    expect(controller).toBeDefined();
+    expect(locationController).toBeDefined();
   });
 
-  it('should return locations', () => {
-    expect(controller.listLocations()).toMatchObject({
+  it('should return an array with locations', () => {
+    expect(locationController.listLocations()).resolves.toMatchObject({
       locations: [
-        'Location 1',
-        'Location 2',
-        'Location 3'
-      ]
-    })
-  })
+        {
+          id: 1,
+          name: 'Location 1',
+        },
+        {
+          id: 2,
+          name: 'Location 2',
+        },
+      ],
+    });
+  });
 });

@@ -27,7 +27,10 @@ describe('AppController (e2e)', () => {
       .get('/location/list')
       .expect(200)
       .expect({
-        locations: ['Location 1', 'Location 2', 'Location 3'],
+        locations: [
+          { id: 1, name: 'Carlos' },
+          { id: 2, name: 'Azusa' }
+        ],
       });
   });
 });
